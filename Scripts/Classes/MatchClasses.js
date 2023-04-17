@@ -1,4 +1,4 @@
-class Match {
+export default class Match {
     #goals; #subsIn; #subsOut; #yellowCards; #expulsions; 
     #homeFormation; #awayFormation;
     #onFieldHomePlayers; #onFieldAwayPlayers;
@@ -35,7 +35,7 @@ class Match {
     }
 }
 
-class MatchEvent {
+export default class MatchEvent {
     #player; #minute;
     constructor(player, minute) {
         this.#player = player;
