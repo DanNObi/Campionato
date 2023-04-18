@@ -40,7 +40,7 @@ export class Participant extends Person {
         this._firstName = firstName;
         this._lastName = lastName;
         this._dateOfBirth = dateOfBirth;
-        this.#role = "";
+        this.#role = "None";
         this.#number = -1;
         this.#playerStints = [];
         this.#managerStints = [];
