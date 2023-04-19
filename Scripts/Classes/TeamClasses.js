@@ -115,7 +115,7 @@ export class Team {
 	
 }
 
-class TeamSeasons {
+export class TeamSeasons {
     #pastPlayers; #managers; #matchesPlayed; #stadiumAddress; #team;
     constructor(stadiumAddress, pastPlayers, managers, matchesPlayed, team){
         this.#stadiumAddress = stadiumAddress;
@@ -207,7 +207,7 @@ class Address{
     }
 }
 
-class Address{
+export class Address{
     #street;
     #number;
     constructor(street,number){
