@@ -1,4 +1,7 @@
-class Championship {
+import { Person, Participant } from "./PersonClasses";
+import { Match, MatchEvents } from "./MatchClasses";
+
+export class Championship {
     static #championships = new Array();
 
     constructor(season, championship) {
@@ -16,12 +19,16 @@ class Championship {
     getSeason(num) {
 
     }
+
+    /**
+     * @param {Person} searched 
+     */
     getPerson(searched) {
         
     }
 }
 
-class Season {
+export class Season {
     constructor(teams, groups, edition) {
         this.#teams = teams;
         this.#edition = edition;
@@ -58,6 +65,11 @@ class Season {
 }
 
 class Group {
+    #days;
+
+    /**
+     * @param {Array<Day>} days 
+     */
     constructor(days) {
         this.#days = days;
     }
@@ -69,8 +81,22 @@ class Group {
         this.days = days;
     }
 
-    getMatchDayRanking(day) {
+    /**
+     * @returns {Array<Match>}
+     */
+    #getAllMatches() {
+        matches = [];
+        this.#days.reduce(x => matches.concat(x.matches()));
+        return matches;
+    }
 
+    /**
+     * 
+     * @param {Day} day 
+     */
+    getMatchDayRanking(day) {
+        allMatches = this.#getAllMatches();
+        
     }
     
     getRanking() {
@@ -78,17 +104,22 @@ class Group {
     }
 }
 
-class Day {
+export class Day {
     constructor(matches) {
         this.#matches = matches;
     }
 
+    /**
+     * @returns {Array<Match>}
+     */
     get matches() {
         return this.matches;
     }
+
+    /**
+     * @param {Array<Match>} listaPartite
+     */
     set matches(matches) {
         this.matches = matches;
     }
 }
-
-
