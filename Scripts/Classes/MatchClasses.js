@@ -1,266 +1,212 @@
-// Classi relative alle squadre
-import { Championship, Season, Group, Day } from "./ChampionshipClasses.js";
 import { Person, Participant } from "./PersonClasses.js";
-import {Match, MatchEvent, Formation} from './MatchClasses.js'
+import { Team, Address, Employment } from "./TeamClasses.js";
 
-export class Team {
-    /** @type {String} */ #name; 
-    /** @type {Address} */ #stadiumAddress; 
-    /** @type {Trophy} */ #trophies; 
-    /** @type {TeamSeasons} */ #pastSeasons; 
-    /** @type {Array<Match>} */ #matches; 
-    /** @type {Array<Participant>} */ #players; 
-    /** @type {Participant} */ #manager;
-    /** @type {string} */ #crest;
-	
+export class Match {
+    /** @type {Array<MatchEvent>} */#goals; 
+    /** @type {Array<MatchEvent>} */ #subsIn; /** @type {Array<MatchEvent>} */ #subsOut; 
+    /** @type {Array<MatchEvent>} */ #yellowCards; /** @type {Array<MatchEvent>} */#expulsions;
+    /** @type {Formation} */ #homeFormation; 
+    /** @type {Formation} */ #awayFormation;
+    /** @type {Array<Participant>} */ #onFieldHomePlayers;
+    /** @type {Array<Participant>} */ #onFieldAwayPlayers;
+    /** @type {Date} */ #date;
+
     /**
-     * @param {String} name 
-     * @param {Address} stadiumAddress 
-     * @param {string} url Link all'Immagine dello stemma
-     * @param {Array<Match>} matches 
-     * @param {Array<Participant>} players 
-     * @param {Participant} manager 
+     * Partita
+     * @param {Date} date 
+     * @param {Formation} homeFormation 
+     * @param {Formation} awayFormation 
      */
-    constructor(name, stadiumAddress, crest, trophies, matches, players, manager) {
-        this.name = name;
-        this.stadiumAddress = stadiumAddress;
-        this.#crest = crest;
-        if (arguments.length === 7) {
-            this.trophies = trophies;
-            this.pastSeasons = pastSeasons;
-            this.#matches = matches;
-            this.#players = players;
-		    this.#manager = manager;
-        } else {
-            this.#trophies = [];
-            this.#pastSeasons = [];
-            this.#matches = [];
-            this.#players = [];
-		    this.#manager = "Vacant";
-        }
+    constructor(date, homeFormation, awayFormation) {
+        this.#date = date;
+        this.#homeFormation = homeFormation;
+        this.#awayFormation = awayFormation;
+        this.#goals, this.#subsIn, this.#subsOut, this.#yellowCards = [];
     }
 
-    get name() {
-        return this.#name;
+    // FUNZIONI CRUD
+    addGoal(player, minute) {
+        this.#goals.push(new MatchEvent(player, minute));
     }
 
-    set name(name) {
-        this.#name = name;
+    addEnteringPlayer(player, minute) {
+        this.#subsIn.push(new MatchEvent(player, minute));
     }
 
-    get stadiumAddress() {
-        return this.#stadiumAddress;
+    addExitingPlayer(player, minute) {
+        this.#subsOut.push(new MatchEvent(player, minute));
     }
 
-    set stadiumAddress(stadiumAddress) {
-        this.#stadiumAddress = stadiumAddress;
+    addYellowCard(player, minute) {
+        this.#yellowCards.push(new MatchEvent(player, minute));
+        player.yellowCards+=1;
     }
 
-    get trophies() {
-        return this.#trophies;
+    addExpulsion(player, minute) {
+        this.#expulsions.push(new MatchEvent(player, minute));
     }
 
-    set trophies(trophies) {
-        this.#trophies = trophies;
+    // FUNZIONI PER L'OTTENIMENTO DI INFORMAZIONI
+    //  GIOCATORI
+    get getAllOnFieldPlayers() {
+        return this.#onFieldHomePlayers.concat(this.#onFieldAwayPlayers);
     }
 
-    get nTrophies() {
-        return this.#trophies.lenght(); // Ho fatto questo metodo nel caso servisse
+    // SQUADRE
+    /**
+     * @returns {Date}
+     */
+    get date() {
+        return this.#date;
     }
 
-    get pastSeasons() {
-        return this.#pastSeasons;
+    set date(date) {
+        this.#date = date;
     }
 
-    set pastSeasons(pastSeasons) {
-        this.#pastSeasons = pastSeasons;
+    isHomeTeamVictory() {
+        return this.homeTeamGoals() > this.awayTeamGoals();
     }
 
-    get matches() {
-        return this.#matches;
+    isDraw() {
+        return this.homeTeamGoals() === this.awayTeamGoals();
     }
-
-    set matches(matches) {
-        this.#matches = matches;
-    }
-
-    get players() {
-        return this.#players;
-    }
-
-    set players(players) {
-        this.#players = players;
+    
+    /**
+     * @param {Team} team 
+     */
+    isHomeTeam(team) {
+        return team.name() === this.#homeFormation.teamName();
     }
 
     /**
-     * @returns {Participant} Allenatore
-     * @returns {String} Se il posto e' vacante
+     * @param {Team} team 
      */
-    get manager() {
-        return this.#manager;
+    isAwayTeam(team) {
+        return team.name === this.#awayFormation.teamName();
     }
 
     /**
-     * @return {Number} goals
+     * Restituisce il numero di goal fatti dalla tua squadra. 
+     * Se la squadra non ha partecipato, restituisce -1.
+     * @param {Team} Squadra 
+     * @returns {Number} NumDiGoal
      */
-    getNumberOfGoals() {
-        let goals = 0;
-        this.#matches.map(x => x.isHomeTeam(this) ? goals+=x.homeTeamGoals() : goals+=x.awayTeamGoals());
-        return goals;
+    teamGoals(team) {
+        if (this.isHomeTeam() && this.isAwayTeam()) return -1;
+        if (this.isHomeTeam()) return this.homeTeamGoals();
+        return this.awayTeamGoals();
     }
 
     /**
-     * 
-     * @returns {Number} numeroDiVittorie
+     * @returns {Number}
      */
-    getWins() {
-        let win = 0;
-        this.matches().forEach(m => m.homeTeamName() ==  this.#name ? m.isHomeTeamWinner() ? win++ : win+=0 : m.isHomeTeamWinner() ? win+=0 : win++);
-        return win;
+    get homeTeamGoals() {
+        num = 0;
+        this.#goals.map(x => {
+            if (this.#homeFormation.players().includes(x.player)) num++;
+        });
+        return num;
     }
 
     /**
-     * 
-     * @returns {Number} numeroDiSconfitte
+     * @returns {Number}
      */
-    getLosses() {
-        let losses = 0;
-        this.matches().forEach(m => m.homeTeamName() == this.#name ? m.isHomeTeamWinner() ? lose+=0 : lose++ : m.isHomeTeamWinner() ? lose++ : lose+=0);
-        return losses;
+    get awayTeamGoals() {
+        let num = 0;
+        this.#goals.map(x => {
+            if (this.#awayFormation.players().includes(x.player)) num++;
+        });
+        return num;
     }
 
     /**
-     * Numero di pareggi
-     * @returns {Number} numeroDiPareggi
+     * Restituisce il punteggio di FairPlay per la squadra in casa
+     * @returns {Number}
      */
-    getDraws() {
-        let draw = 0;
-        this.matches().forEach(m => m.isDraw() ? draw++ : draw+=0);
-        return draw;
+    get homeTeamFairPlayPoints() {
+        let points = 0;
+        this.#yellowCards.map(x => {
+            if (this.#homeFormation.players.includes(x.player)) points-=1;
+        });
+        this.#expulsions.map(x => {
+            if (this.#homeFormation.players.includes(x.player)) points-=3;
+        });
+        return points;
     }
 
-    getPoints() {
-        return this.getWins()*3 + this.getDraws();
-    }
-
-    getGoalDifference() {
-        let gF = 0, gS = 0;
-        this.matches().forEach(m => m.goals.forEach(g => this.players.includes(g) ? gF++ : gS++));
-        return gF - gS;
-    }
-
-    get fairPlayPoints() {
-        let fairPlay = 0;
-        this.#matches.map(x => x.isHomeTeam(this) ? fairPlay+=x.homeTeamFairPlayPoints() : fairPlay+=x.AwayTeamFairPlayPoints());
-        return fairPlay;
-    }
-
-    pointsBeforeDate(Date) {
-        // TODO: FINISCI
-        let matches = this.#matches.filter(x => x.date() < Date);
-        let wins = 0, draws = 0;
-        matches.map(x => x.isDraw ? draws++ : draws+=0);
-        matches.forEach(m => m.homeTeamName() ==  this.#name ? m.isHomeTeamWinner() ? wins++ : wins+=0 : m.isHomeTeamWinner() ? wins+=0 : wins++);
-        return wins*3 + draws;
-
-    }
-
-    signPlayer(player) {
-        this.#players.add(player);
-    }
-
-    sellPlayer(player) {
-        this.#players.filter(p => p != player);
-    }
-	
-	signManager(manager) {
-		this.#manager = manager;
-	}
-	
-	sackManager() {
-		this.#manager = "Vacant";
-	}
-	
-}
-
-export class Address{
-    #street;
-    #number;
-    constructor(street,number){
-        this.#street = street;
-        this.#number = number;
-    }
-
-    get street(){
-        return this.#street;
-    }
-
-    set street(street){
-        this.#street = street;
-    }
-
-    get number(){
-        return this.#number;
-    }
-
-    set number(number){
-        this.#number = number;
+    /**
+     * Restituisce il punteggio per fairPlay della squadra in trasferta
+     * @returns {Number}
+     */
+    get AwayTeamFairPlayPoints() {
+        let points = 0;
+        this.#yellowCards.map(x => {
+            if (this.#awayFormation.players.includes(x.player)) points-=1;
+        });
+        this.#expulsions.map(x => {
+            if (this.#awayFormation.players.includes(x.player)) points-=3;
+        });
+        return points;
     }
 }
 
-export class Trophy {
-    #name; #edition;
+export class MatchEvent {
+    #player; #minute;
     
     /**
-     * Classe che descrive
-     * @param {String} name
-     * @param {Number} edition
+     * @param {Participant} player 
+     * @param {Number} minute 
      */
-
-    constructor(name, edition){
-        this.#name = name;
-        this.#edition = edition;
-
-    }
-
-    get name(){
-        return this.#name;
-    }
-
-    set name(name){
-        this.#name = name;
-    }
+    constructor(player, minute) {
+        this.#player = player;
+        this.#minute = minute;
+    };
     
-    get edition(){
-        return this.#edition;
-    }
+    get player() { return this.#player; }
+    get minute() { return this.#minute; }
 
-    set edition(edition){
-        this.#edition = edition;
-    }
+    /**@param {Participant} player*/ set player(player) {this.#player = player;}
+    /**@param {Number} player*/ set minute(minute) {this.#minute = minute;}
 }
 
 /**
- *  Classe per descrivere un assunzione di un giocatore o allenatore
+ *  Classe che simula il gruppo di giocatori che arrivano alla partita.
  */
-export class Employment {
-    #team; #seasons;
+export class Formation {
+    #team; #manager; #starters; #bench;
 
     /**
-     * I due parametri rappresentano la squadra
      * @param {Team} team 
-     * @param {Season} seasons 
+     * @param {Participant} manager 
+     * @param {Array<Participant>} starters 
+     * @param {Array<Participant>} bench 
      */
-    constructor (team, seasons) {
+    constructor(team, manager, starters, bench) {
         this.#team = team;
-        this.#seasons = seasons;
+        this.#manager = manager;
+        this.#starters = starters;
+        this.#bench = bench;
     }
 
-    get team() {
-        return this.#team;
+    /**
+     * @returns {Array<Participant>}
+     */
+    get players() {
+        players = [];
+        this.#starters.map(x => players.push(x));
+        this.#bench.map(x => players.push(x));
+        return players;
     }
 
-    get seasons() {
-        return this.#seasons;
+    /**
+     * @returns {String}
+     */
+    get teamName() {
+        return this.#team.name;
+    }
+
+    get manager() {
+        return this.#manager;
     }
 }
