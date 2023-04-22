@@ -1,4 +1,4 @@
-export class Trophie {
+export class Trophy {
     #name; #edition;
     
     /**
