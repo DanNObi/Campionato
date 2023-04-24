@@ -14,13 +14,13 @@ export class Match {
     /**
      * Partita
      * @param {Date} date 
-     * @param {Formation} homeFormation 
-     * @param {Formation} awayFormation 
+     * @param {Team} homeTeam
+     * @param {Team} awayTeam
      */
-    constructor(date, homeFormation, awayFormation) {
+    constructor(date, homeTeam, awayTeam) {
         this.#date = date;
-        this.#homeFormation = homeFormation;
-        this.#awayFormation = awayFormation;
+        this.#homeFormation = new Formation(homeTeam.formation());
+        this.#awayFormation = new Formation(awayTeam.formation());
         this.#goals, this.#subsIn, this.#subsOut, this.#yellowCards = [];
     }
 
@@ -181,8 +181,20 @@ export class Formation {
      * @param {Participant} manager 
      * @param {Array<Participant>} starters 
      * @param {Array<Participant>} bench 
+     * 
+     * OPPURE !
+     * 
+     * @param {Formation} formazione
      */
     constructor(team, manager, starters, bench) {
+        if (arguments.length === 1 && typeof(Formation)) {
+            /**@type {Formation}*/ team;
+            this.#team = team.team();
+            this.#manager = team.manager();
+            this.#starters = team.starters();
+            this.#bench = team.bench();
+        }
+
         this.#team = team;
         this.#manager = manager;
         this.#starters = starters;
@@ -199,6 +211,18 @@ export class Formation {
         return players;
     }
 
+    get team() {
+        return this.#team;
+    }
+
+    get starters() {
+        return this.#starters;
+    }
+
+    get bench() {
+        return this.#bench;
+    }
+
     /**
      * @returns {String}
      */
@@ -210,3 +234,4 @@ export class Formation {
         return this.#manager;
     }
 }
+
