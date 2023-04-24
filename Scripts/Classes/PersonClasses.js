@@ -1,10 +1,14 @@
 // Classi per le persone
 export class Person {
-  _firstName; _lastName; _dateOfBirth;
+  /**@type {string}*/ _firstName; 
+  /**@type {string}*/_lastName; 
+  /**@type {Date}*/ _dateOfBirth;
+  static _people = [];
   constructor(firstName, lastName, dateOfBirth) {
     this._firstName = firstName;
     this._lastName = lastName;
     this._dateOfBirth = dateOfBirth;
+    _people.push(this);
   }
   
   get firstName() {
@@ -19,31 +23,44 @@ export class Person {
     return this._dateOfBirth;
   }
   
+
+  get people() {
+    return _people;
+  }
 }
 
 // Non ha senso dividere giocatori ed allenatori quando
 // spesso gli allenatori sono ex-giocatori e alcuni giocatori
 // fungono contemporaneamente come allenatori!
 export class Participant extends Person {
-    #role; #number; #playerStints; #managerStints;
-    constructor(firstName, lastName, dateOfBirth, role, number) { // Costruttore per giocatori
-        this._firstName = firstName;
-        this._lastName = lastName;
-        this._dateOfBirth = dateOfBirth;
-        this.#role = role;
-        this.#number = number;
-        this.#playerStints = [];
-        this.#managerStints = [];
-    }
 
-    constructor(firstName, lastName, dateOfBirth) { // Costruttore per allenatori senza esperienza
-        this._firstName = firstName;
-        this._lastName = lastName;
-        this._dateOfBirth = dateOfBirth;
-        this.#role = "None";
-        this.#number = -1;
-        this.#playerStints = [];
-        this.#managerStints = [];
+    /**@type {string}*/ #role; 
+    /**@type {Number}*/ #number; 
+    /**@type {Array<Team>}*/ #playerStints; 
+    /**@type {Array<Team>}*/ #managerStints;
+
+    constructor(firstName, lastName, dateOfBirth, managerStints, playerStint,  role, number) { // Costruttore per giocatori
+        super(firstName, lastName, dateOfBirth);
+        switch (arguments.length) {
+            case 4:
+                this.#managerStints = managerStints;
+                this.#playerStints = [];
+                this.#role = "Nessuno";
+                this.#number = -1;
+            break;
+
+            case 7:
+                this.#managerStints = managerStints;
+                this.#playerStints = playerStint;
+                this.#role = role;
+                this.#number = number;
+                break;
+            default:
+                this.#managerStints = [];
+                this.#playerStints = [];
+                this.#role = "Nessuno";
+                this.#number = -1;
+        }
     }
 
     get getRole() {
@@ -70,10 +87,16 @@ export class Participant extends Person {
         this.#playerStints = stintsList;
     }
 
+    /**
+     * @param {Team} employment 
+     */
     addPlayerStint(employment) {
         this.#playerStints.push(employment);
     } 
 
+    /**
+     * @param {Team} employment 
+     */
     removePlayerStint(employment) {
         this.#playerStints.filter(x => x !== employment);
     }
