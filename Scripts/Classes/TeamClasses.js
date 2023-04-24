@@ -12,6 +12,7 @@ export class Team {
     /** @type {Array<Participant>} */ #players; 
     /** @type {Participant} */ #manager;
     /** @type {string} */ #crest;
+    /**@type {Formation}*/ #formation;
 	
     /**
      * @param {String} name 
@@ -36,8 +37,10 @@ export class Team {
             this.#pastSeasons = [];
             this.#matches = [];
             this.#players = [];
-		    this.#manager = "Vacant";
+	    this.#manager = "Vacant";
         }
+
+        this.#formation = new Formation(this, this.#manager, [], []);
     }
 
     get name() {
@@ -54,6 +57,28 @@ export class Team {
 
     set stadiumAddress(stadiumAddress) {
         this.#stadiumAddress = stadiumAddress;
+    }
+
+    get crest() {
+        return this.#crest;
+    }
+
+    /**
+     * @param {string} link
+     */
+    set crest(crest) {
+        this.#crest = crest;
+    }
+
+    get formation() {
+        return this.#formation;
+    }
+
+    /**
+     * @param {Formation} formation
+     */
+    set formation(formation) {
+        this.#formation = formation;
     }
 
     get trophies() {
@@ -156,13 +181,11 @@ export class Team {
     }
 
     pointsBeforeDate(Date) {
-        // TODO: FINISCI
         let matches = this.#matches.filter(x => x.date() < Date);
         let wins = 0, draws = 0;
         matches.map(x => x.isDraw ? draws++ : draws+=0);
         matches.forEach(m => m.homeTeamName() ==  this.#name ? m.isHomeTeamWinner() ? wins++ : wins+=0 : m.isHomeTeamWinner() ? wins+=0 : wins++);
         return wins*3 + draws;
-
     }
 
     signPlayer(player) {
@@ -240,27 +263,3 @@ export class Trophy {
     }
 }
 
-/**
- *  Classe per descrivere un assunzione di un giocatore o allenatore
- */
-export class Employment {
-    #team; #seasons;
-
-    /**
-     * I due parametri rappresentano la squadra
-     * @param {Team} team 
-     * @param {Season} seasons 
-     */
-    constructor (team, seasons) {
-        this.#team = team;
-        this.#seasons = seasons;
-    }
-
-    get team() {
-        return this.#team;
-    }
-
-    get seasons() {
-        return this.#seasons;
-    }
-}
