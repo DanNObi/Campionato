@@ -21,13 +21,7 @@ export class Championship {
     getSeason(num) {
         let season = this.#seasons.filter(x => x.edition() === num);
         if (season.length === 0) return this.#seasons[0];
-    }
-
-    /**
-     * @param {Person} searched 
-     */
-    getPerson(searched) {
-        // TODO: Fai la funzione
+        return season[0];
     }
 }
 
