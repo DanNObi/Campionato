@@ -1,6 +1,6 @@
 import { Person, Participant } from "./PersonClasses.js";
 import { Match, MatchEvent } from "./MatchClasses.js";
-import { Team, Address, Employment } from "./TeamClasses.js";
+import { Team, Address } from "./TeamClasses.js";
 
 export class Championship {
     static #championships = new Array();
