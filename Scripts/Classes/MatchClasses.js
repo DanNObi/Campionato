@@ -1,5 +1,5 @@
 import { Person, Participant } from "./PersonClasses.js";
-import { Team, Address, Employment } from "./TeamClasses.js";
+import { Team, Address } from "./TeamClasses.js";
 
 export class Match {
     /** @type {Array<MatchEvent>} */#goals; 
