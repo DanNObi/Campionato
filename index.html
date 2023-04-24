@@ -1,0 +1,101 @@
+<!-- Metodi: acquista e vendi giocatore, acquista e vendi allenatore, mostrare vittorie, sconfitte e pareggi, mostra punti, differenza goal fatti e subiti -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIGC</title>
+    <link rel="stylesheet" href="index.css">
+    <script></script>
+</head>
+<body>
+    <div id="loginPage" class="none">
+        <div id="logoFIGC">
+            <img src="Image/logoFIGC.jpg" id="logoFIGC">
+        </div>
+        <form id="loginForm">
+            <label for="username">Username:</label><br>
+            <input type="text" name="username" id="username"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" name="password" id="password"><br>
+            <input type="button" value="Sign in" id="signInButton">
+        </form>
+    </div>
+
+    <div id="presidentPage" class="principalDiv">
+        <header>
+            <img src="Image/logoFIGC.jpg" class="logoUser">
+            <h1>Benvenuto presidente</h1>
+        </header>
+        <aside class="sideBar">
+            <input type="button" value="Guarda squadra">
+            <input type="button" value="Acquista giocatore">
+            <input type="button" value="Assumi allenatore">
+        </aside>
+        <aside class="main none">
+            <div class="teamData"> Dati squadra</div>
+            <div class="nextGames">Prossime partite</div>
+        </aside>
+        <aside class="guardaSquadra none">
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+        </aside>
+        <aside class="acquistaGiocatore">
+            <div class="searchContainer">
+                <input type="search" placeholder="Seach..." id="searchGiocatore">
+            </div>
+            <div class="result">
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+            </div>
+        </aside>
+        <aside class="assumiAllenatore none"></aside>
+        <footer></footer>
+    </div>
+
+    <div id="managerPage" class="principalDiv none">
+        <header>
+            <img src="Image/logoFIGC.jpg" class="logoUser">
+            <h1>Benvenuto mister</h1>
+        </header>
+        <aside class="sideBar">
+            <input type="button" value="Guarda squadra">
+            <input type="button" value="Decidi formazione">
+        </aside>
+        <aside class="main">
+            <div class="teamData"> Dati squadra</div>
+            <div class="nextGames">Prossime partite</div>
+        </aside>
+        <footer></footer>
+    </div>
+
+    <div id="figcPage" class="principalDiv none">
+        <header>
+            <img src="Image/logoFIGC.jpg" class="logoUser">
+            <h1>Benvenuto signor</h1>
+        </header>
+        <aside class="sideBar">
+            <input type="button" value="Modifica partite">
+        </aside>
+        <aside class="main">Partite</aside>
+        <footer></footer>
+    </div>
+
+    <div id="refereePage" class="principalDiv none">
+        <header>
+            <img src="Image/logoFIGC.jpg" class="logoUser">
+            <h1>Benvenuto signor</h1>
+        </header>
+        <aside class="sideBar">
+            <input type="button" value="Modifica partita">
+            <input type="button" value="Guarda partita">
+        </aside>
+        <aside class="main">Partite arbitrate o da arbitrare</aside>
+        <footer></footer>
+    </div>
+</body>
+</html>
