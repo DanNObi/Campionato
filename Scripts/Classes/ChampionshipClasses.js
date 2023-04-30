@@ -1,8 +1,4 @@
-import { Person, Participant } from "./PersonClasses.js";
-import { Match, MatchEvent } from "./MatchClasses.js";
-import { Team, Address } from "./TeamClasses.js";
-
-export class Championship {
+class Championship {
     static #championships = new Array();
     /** @type {Array<Season>}*/#seasons;
 
@@ -25,7 +21,7 @@ export class Championship {
     }
 }
 
-export class Season {
+class Season {
     /**@type {Array<Group>}*/ #groups;
     /**@type {Number} */ #edition;
 
@@ -61,7 +57,7 @@ export class Season {
     }
 }
 
-export class Group {
+class Group {
     #teams; #days;
 
     /**
@@ -85,7 +81,7 @@ export class Group {
      */
     #getAllMatches() {
         let matches = [];
-        this.#days.reduce(x => matches.concat(x.matches()));
+        this.#days.reduce(x => matches.concat(x.matches));
         return matches;
     }
     
@@ -118,11 +114,12 @@ export class Group {
             if (h2h > 0) return 1;
             if (h2h < 0) return -1;
             // Caso 5: Fair Play
-            if (x.fairPlayPoints() > y.fairPlayPoints()) return 1;
-            if (y.fairPlayPoints() > x.fairPlayPoints()) return -1;
+            if (x.fairPlayPoints > y.fairPlayPoints) return 1;
+            if (y.fairPlayPoints > x.fairPlayPoints) return -1;
             // Caso 6: A caso
             return Math.random() - 0.5;
         });
+        return ranking;
     }
 
     /**
@@ -154,7 +151,7 @@ export class Group {
     }
 }
 
-export class Day {
+class Day {
     #matches;
 
     constructor(matches) {
@@ -165,7 +162,7 @@ export class Day {
      * @returns {Array<Match>}
      */
     get matches() {
-        return this.matches;
+        return this.#matches;
     }
 
     /**
@@ -174,4 +171,6 @@ export class Day {
     set matches(matches) {
         this.matches = matches;
     }
+}
+
 }
