@@ -46,6 +46,12 @@ function load() {
     exitBtn.forEach(x => x.addEventListener('click', logout));
 
     submitBtn.addEventListener('click', checkLogin);
+
+    /*
+    usernameBox.value = "Floriano Noto";
+    passwordBox.value = "cccc";
+    checkLogin();
+    */
 }
 
 // FUNZIONI
@@ -117,9 +123,9 @@ function loadPresident() {
     presManagerBtn.addEventListener('click', loadManagerPage);
     presidentPage.classList.toggle('none');
 
-    //presidentViewTeam();
+    presidentViewTeam();
     //loadPlayerView();
-    loadManagerPage();
+    //loadManagerPage();
 }
 
     //  > Pagina Squadra
@@ -158,7 +164,7 @@ function loadPresident() {
             card.classList.add('card');
             card.innerHTML = `  <img src=${x._image}>
                                 <p>${x._lastName} #${x.getNumber}</p>
-                                <button class="sellBtn">Vendi</button`;
+                                <img class="sellBtn" src='./Media/money.png'>`;
             dbPlayers.push({player: x, card: card});
             presPlayerCardContainer.appendChild(card);
         });
@@ -215,7 +221,7 @@ function loadPresident() {
         dbManagers = [];
         if (currentClub.manager === "Vacant" || typeof(currentClub.manager) !== "object") {
             presCurrentManagerContainer.querySelector('img').src = 'https://img.freepik.com/premium-vector/vacant-position_162329-184.jpg';
-            presCurrentManagerContainer.querySelector('p').text = 'Posizione Libera';
+            presCurrentManagerContainer.querySelector('p').innerText = 'Posizione Libera';
             presCurrentManagerContainer.querySelector('button').disabled = true;
             freeManagers.map(x => {
                 let card = document.createElement('div');
@@ -228,7 +234,7 @@ function loadPresident() {
             });
         } else {
             presCurrentManagerContainer.querySelector('img').src = currentClub.manager.image;
-            presCurrentManagerContainer.querySelector('p').text = `${currentClub.manager._firstName} ${currentClub.manager._lastName}`;
+            presCurrentManagerContainer.querySelector('.managerName').innerText = `${currentClub.manager.firstName} ${currentClub.manager.lastName}`;
             presCurrentManagerContainer.querySelector('button').disabled = false;
             presCurrentManagerContainer.querySelector('button').addEventListener('click', fireManager);
             freeManagers.map(x => {
@@ -318,6 +324,57 @@ function loadManager() {
         benchContainer.innerHTML = "";
         if (![...manTeamScreen.classList].includes('none')) manTeamScreen.classList.toggle('none');
         if ([...manFormationScreen.classList].includes('none')) manFormationScreen.classList.toggle('none');
+        
+        if (currentClub.formation.starters.length === 11) {
+            let playerMap = currentClub.players.filter(x => !currentClub.formation.players.includes(x));
+        playerMap.map(x => {
+            let card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `  <img src=${x._image}>
+                                <p>${x._lastName} #${x.getNumber}</p>
+                                <section>
+                                    <button class="ToTitolare" disabled>Titolare</button>
+                                    <button class="ToPanchina">Panchina</button>
+                                </section>`;
+            dbPlayers.push({player: x, card: card});
+            freePlayers.appendChild(card);
+        });
+        let starterMap = currentClub.formation.starters;
+        starterMap.map(x => {
+            let card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `  <img src=${x._image}>
+                                <p>${x._lastName} #${x.getNumber}</p>
+                                <section>
+                                    <button class="ToLibero">Libero</button>
+                                    <button class="ToPanchina">Panchina</button>
+                                </section>`;
+            dbPlayers.push({player: x, card: card});
+            startersContainer.appendChild(card);
+        });
+        let benchMap = currentClub.formation.bench;
+        benchMap.map(x => {
+            let card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `  <img src=${x._image}>
+                                <p>${x._lastName} #${x.getNumber}</p>
+                                <section>
+                                    <button class="ToTitolari" disabled>Titolare</button>
+                                    <button class="ToLibero">Libero</button>
+                                </section>`;
+            dbPlayers.push({player: x, card: card});
+            benchContainer.appendChild(card);
+        });
+        freePlayers.addEventListener('click', freePlayersChange);
+        startersContainer.addEventListener('click', startersChange);
+        benchContainer.addEventListener('click', benchChange);
+        } else {
+            generateFormationCards();
+        }
+        
+    }
+
+    function generateFormationCards() {
         let playerMap = currentClub.players.filter(x => !currentClub.formation.players.includes(x));
         playerMap.map(x => {
             let card = document.createElement('div');
@@ -351,8 +408,8 @@ function loadManager() {
             card.innerHTML = `  <img src=${x._image}>
                                 <p>${x._lastName} #${x.getNumber}</p>
                                 <section>
+                                    <button class="ToTitolari">Titolare</button>
                                     <button class="ToLibero">Libero</button>
-                                    <button class="ToPanchina">Panchina</button>
                                 </section>`;
             dbPlayers.push({player: x, card: card});
             benchContainer.appendChild(card);
