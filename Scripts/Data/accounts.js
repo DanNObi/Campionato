@@ -24,7 +24,7 @@ const accounts = [{
 },
 {
   "username": "Maurizio Ciampi",
-  "password": "super",
+  "password": "aaaa",
   "type": "Arbitro",
   "team": "FIGC"
 }];
