@@ -1,14 +1,16 @@
 // Classi per le persone
-export class Person {
-  /**@type {string}*/ _firstName; 
+class Person {
+  /**@type {string}*/_firstName; 
   /**@type {string}*/_lastName; 
+  /**@type {string}*/_image;
   /**@type {Date}*/ _dateOfBirth;
-  static _people = [];
-  constructor(firstName, lastName, dateOfBirth) {
+
+  constructor(firstName, lastName, dateOfBirth, image) {
     this._firstName = firstName;
     this._lastName = lastName;
     this._dateOfBirth = dateOfBirth;
-    _people.push(this);
+    this._image = image;
+    if (typeof(image) === "undefined") this._image = 'https://icon-library.com/images/my-account-icon-png/my-account-icon-png-23.jpg';
   }
   
   get firstName() {
@@ -22,39 +24,40 @@ export class Person {
   get dateOfBirth() {
     return this._dateOfBirth;
   }
-  
 
-  get people() {
-    return _people;
+  get image() {
+    return this._image;
   }
+  
 }
 
 // Non ha senso dividere giocatori ed allenatori quando
 // spesso gli allenatori sono ex-giocatori e alcuni giocatori
 // fungono contemporaneamente come allenatori!
-export class Participant extends Person {
+class Participant extends Person {
 
     /**@type {string}*/ #role; 
     /**@type {Number}*/ #number; 
     /**@type {Array<Team>}*/ #playerStints; 
     /**@type {Array<Team>}*/ #managerStints;
 
-    constructor(firstName, lastName, dateOfBirth, managerStints, playerStint,  role, number) { // Costruttore per giocatori
-        super(firstName, lastName, dateOfBirth);
+    constructor(firstName, lastName, dateOfBirth, image, managerStints, playerStint,  role, number) { // Costruttore per giocatori
+        super(firstName, lastName, dateOfBirth, image);
         switch (arguments.length) {
-            case 4:
+            case 5:
                 this.#managerStints = managerStints;
                 this.#playerStints = [];
                 this.#role = "Nessuno";
                 this.#number = -1;
             break;
 
-            case 7:
+            case 8:
                 this.#managerStints = managerStints;
                 this.#playerStints = playerStint;
                 this.#role = role;
                 this.#number = number;
                 break;
+                
             default:
                 this.#managerStints = [];
                 this.#playerStints = [];
@@ -123,5 +126,35 @@ export class Participant extends Person {
 
     clearManagerStints() {
         this.#managerStints.filter(x => true == false);
+    }
+}
+
+
+class Referee extends Person {
+    /**@type {Array<Match>}*/ #matches;
+
+    constructor(firstName, lastName, dateOfBirth, image, matches) {
+        super(firstName, lastName, dateOfBirth, image);
+        this.#matches = matches;
+    }
+
+    get matches() {
+        return this.#matches;
+    }
+
+    set matches(matches) {
+        this.#matches = matches;
+    }
+
+    addMatch(match) {
+        this.#matches.push(match);
+    }
+
+    removeMatch(match) {
+        this.#matches = this.#matches.filter(x => x !== match);
+    }
+
+    clearMatches() {
+        this.#matches = [];
     }
 }
