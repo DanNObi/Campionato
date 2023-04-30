@@ -1,7 +1,4 @@
-import { Person, Participant } from "./PersonClasses.js";
-import { Team, Address } from "./TeamClasses.js";
-
-export class Match {
+class Match {
     /** @type {Array<MatchEvent>} */#goals; 
     /** @type {Array<MatchEvent>} */ #subsIn; /** @type {Array<MatchEvent>} */ #subsOut; 
     /** @type {Array<MatchEvent>} */ #yellowCards; /** @type {Array<MatchEvent>} */#expulsions;
@@ -9,6 +6,7 @@ export class Match {
     /** @type {Formation} */ #awayFormation;
     /** @type {Array<Participant>} */ #onFieldHomePlayers;
     /** @type {Array<Participant>} */ #onFieldAwayPlayers;
+    /** @type {Person} */ #referee;
     /** @type {Date} */ #date;
 
     /**
@@ -16,12 +14,14 @@ export class Match {
      * @param {Date} date 
      * @param {Team} homeTeam
      * @param {Team} awayTeam
+     * @param {Person} referee
      */
-    constructor(date, homeTeam, awayTeam) {
+    constructor(date, homeTeam, awayTeam, referee) {
         this.#date = date;
-        this.#homeFormation = new Formation(homeTeam.formation());
-        this.#awayFormation = new Formation(awayTeam.formation());
-        this.#goals, this.#subsIn, this.#subsOut, this.#yellowCards = [];
+        this.#homeFormation = new Formation(homeTeam.formation);
+        this.#awayFormation = new Formation(awayTeam.formation);
+        this.#referee = referee;
+        this.#goals = [], this.#subsIn = [], this.#subsOut = [], this.#yellowCards = [], this.#expulsions = [];
     }
 
     // FUNZIONI CRUD
@@ -64,26 +64,46 @@ export class Match {
         this.#date = date;
     }
 
+    get goals() {
+        return this.#goals;
+    }
+
+    get homeFormation() {
+        return this.#homeFormation;
+    }
+
+    set homeTeam(team) {
+        this.#homeFormation = team.formation;
+    }
+
+    set awayTeam(team) {
+        this.#awayFormation = team.formation;
+    }
+
+    get awayFormation() {
+        return this.#awayFormation;
+    }
+
     isHomeTeamVictory() {
-        return this.homeTeamGoals() > this.awayTeamGoals();
+        return this.homeTeamGoals > this.awayTeamGoals;
     }
 
     isDraw() {
-        return this.homeTeamGoals() === this.awayTeamGoals();
+        return this.homeTeamGoals === this.awayTeamGoals;
     }
     
     /**
      * @param {Team} team 
      */
     isHomeTeam(team) {
-        return team.name() === this.#homeFormation.teamName();
+        return team.name === this.#homeFormation.teamName;
     }
 
     /**
      * @param {Team} team 
      */
     isAwayTeam(team) {
-        return team.name === this.#awayFormation.teamName();
+        return team.name === this.#awayFormation.teamName;
     }
 
     /**
@@ -102,7 +122,7 @@ export class Match {
      * @returns {Number}
      */
     get homeTeamGoals() {
-        num = 0;
+        let num = 0;
         this.#goals.map(x => {
             if (this.#homeFormation.players().includes(x.player)) num++;
         });
@@ -151,7 +171,7 @@ export class Match {
     }
 }
 
-export class MatchEvent {
+class MatchEvent {
     #player; #minute;
     
     /**
@@ -173,7 +193,7 @@ export class MatchEvent {
 /**
  *  Classe che simula il gruppo di giocatori che arrivano alla partita.
  */
-export class Formation {
+class Formation {
     #team; #manager; #starters; #bench;
 
     /**
@@ -189,23 +209,23 @@ export class Formation {
     constructor(team, manager, starters, bench) {
         if (arguments.length === 1 && typeof(Formation)) {
             /**@type {Formation}*/ team;
-            this.#team = team.team();
-            this.#manager = team.manager();
-            this.#starters = team.starters();
-            this.#bench = team.bench();
+            this.#team = team.team;
+            this.#manager = team.manager;
+            this.#starters = team.starters;
+            this.#bench = team.bench;
+        } else {
+            this.#team = team;
+            this.#manager = manager;
+            this.#starters = starters;
+            this.#bench = bench;
         }
-
-        this.#team = team;
-        this.#manager = manager;
-        this.#starters = starters;
-        this.#bench = bench;
     }
 
     /**
      * @returns {Array<Participant>}
      */
     get players() {
-        players = [];
+        let players = [];
         this.#starters.map(x => players.push(x));
         this.#bench.map(x => players.push(x));
         return players;
@@ -221,6 +241,14 @@ export class Formation {
 
     get bench() {
         return this.#bench;
+    }
+
+    set starters(starters) {
+        this.#starters = starters;
+    }
+
+    set bench(bench) {
+        this.#bench = bench;
     }
 
     /**
