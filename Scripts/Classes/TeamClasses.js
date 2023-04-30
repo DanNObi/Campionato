@@ -1,9 +1,5 @@
 // Classi relative alle squadre
-import { Championship, Season, Group, Day } from "./ChampionshipClasses.js";
-import { Person, Participant } from "./PersonClasses.js";
-import {Match, MatchEvent, Formation} from './MatchClasses.js'
-
-export class Team {
+class Team {
     /** @type {String} */ #name; 
     /** @type {Address} */ #stadiumAddress; 
     /** @type {Trophy} */ #trophies; 
@@ -28,19 +24,17 @@ export class Team {
         this.#crest = crest;
         if (arguments.length === 7) {
             this.trophies = trophies;
-            this.pastSeasons = pastSeasons;
             this.#matches = matches;
             this.#players = players;
 		    this.#manager = manager;
         } else {
             this.#trophies = [];
-            this.#pastSeasons = [];
             this.#matches = [];
             this.#players = [];
-	    this.#manager = "Vacant";
+	        this.#manager = "Vacant";
         }
 
-        this.#formation = new Formation(this, this.#manager, [], []);
+        this.#formation = new Formation(this, this.#manager, this.#players.slice(0, 7), this.#players.slice(7, 10));
     }
 
     get name() {
@@ -90,7 +84,7 @@ export class Team {
     }
 
     get nTrophies() {
-        return this.#trophies.lenght(); // Ho fatto questo metodo nel caso servisse
+        return this.#trophies.length; // Ho fatto questo metodo nel caso servisse
     }
 
     get pastSeasons() {
@@ -125,12 +119,16 @@ export class Team {
         return this.#manager;
     }
 
+    set manager(manager) {
+        this.#manager = manager;
+    }
+
     /**
      * @return {Number} goals
      */
     getNumberOfGoals() {
         let goals = 0;
-        this.#matches.map(x => x.isHomeTeam(this) ? goals+=x.homeTeamGoals() : goals+=x.awayTeamGoals());
+        this.#matches.map(x => x.isHomeTeam(this) ? goals+=x.homeTeamGoals : goals+=x.awayTeamGoals);
         return goals;
     }
 
@@ -140,7 +138,7 @@ export class Team {
      */
     getWins() {
         let win = 0;
-        this.matches().forEach(m => m.homeTeamName() ==  this.#name ? m.isHomeTeamWinner() ? win++ : win+=0 : m.isHomeTeamWinner() ? win+=0 : win++);
+        this.#matches.forEach(m => m.homeTeamName ==  this.#name ? m.isHomeTeamWinner ? win++ : win+=0 : m.isHomeTeamWinner ? win+=0 : win++);
         return win;
     }
 
@@ -150,7 +148,7 @@ export class Team {
      */
     getLosses() {
         let losses = 0;
-        this.matches().forEach(m => m.homeTeamName() == this.#name ? m.isHomeTeamWinner() ? lose+=0 : lose++ : m.isHomeTeamWinner() ? lose++ : lose+=0);
+        this.#matches.forEach(m => m.homeTeamName() == this.#name ? m.isHomeTeamWinner() ? lose+=0 : lose++ : m.isHomeTeamWinner() ? lose++ : lose+=0);
         return losses;
     }
 
@@ -160,7 +158,7 @@ export class Team {
      */
     getDraws() {
         let draw = 0;
-        this.matches().forEach(m => m.isDraw() ? draw++ : draw+=0);
+        this.#matches.forEach(m => m.isDraw() ? draw++ : draw+=0);
         return draw;
     }
 
@@ -170,13 +168,21 @@ export class Team {
 
     getGoalDifference() {
         let gF = 0, gS = 0;
-        this.matches().forEach(m => m.goals.forEach(g => this.players.includes(g) ? gF++ : gS++));
+        this.#matches.map(m => {
+            if (m.isHomeTeam) {
+                gF+=m.homeTeamGoals;
+                gS+=m.awayTeamGoals;
+            } else {
+                gS+=m.homeTeamGoals;
+                gF+=m.awayTeamGoals;
+            }
+        });
         return gF - gS;
     }
 
     get fairPlayPoints() {
         let fairPlay = 0;
-        this.#matches.map(x => x.isHomeTeam(this) ? fairPlay+=x.homeTeamFairPlayPoints() : fairPlay+=x.AwayTeamFairPlayPoints());
+        this.#matches.map(x => x.isHomeTeam(this) ? fairPlay+=x.homeTeamFairPlayPoints : fairPlay+=x.AwayTeamFairPlayPoints);
         return fairPlay;
     }
 
@@ -184,16 +190,16 @@ export class Team {
         let matches = this.#matches.filter(x => x.date() < Date);
         let wins = 0, draws = 0;
         matches.map(x => x.isDraw ? draws++ : draws+=0);
-        matches.forEach(m => m.homeTeamName() ==  this.#name ? m.isHomeTeamWinner() ? wins++ : wins+=0 : m.isHomeTeamWinner() ? wins+=0 : wins++);
+        matches.forEach(m => m.homeTeamName ==  this.#name ? m.isHomeTeamWinner ? wins++ : wins+=0 : m.isHomeTeamWinner ? wins+=0 : wins++);
         return wins*3 + draws;
     }
 
     signPlayer(player) {
-        this.#players.add(player);
+        this.#players.push(player);
     }
 
     sellPlayer(player) {
-        this.#players.filter(p => p != player);
+        this.#players = this.#players.filter(p => p != player);
     }
 	
 	signManager(manager) {
@@ -206,7 +212,7 @@ export class Team {
 	
 }
 
-export class Address{
+class Address{
     #street;
     #number;
     constructor(street,number){
@@ -231,7 +237,7 @@ export class Address{
     }
 }
 
-export class Trophy {
+class Trophy {
     #name; #edition;
     
     /**
