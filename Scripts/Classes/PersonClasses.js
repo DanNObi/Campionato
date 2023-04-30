@@ -132,7 +132,14 @@ class Participant extends Person {
 
 class Referee extends Person {
     /**@type {Array<Match>}*/ #matches;
-
+    
+    /**
+    * @param {string} firstName 
+    * @param {string} lastName 
+    * @param {Date} dateOfBirth 
+    * @param {string} image 
+    * @param {Array<Match>} matches 
+    */
     constructor(firstName, lastName, dateOfBirth, image, matches) {
         super(firstName, lastName, dateOfBirth, image);
         this.#matches = matches;
