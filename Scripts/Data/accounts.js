@@ -24,7 +24,19 @@ const accounts = [{
 },
 {
   "username": "Maurizio Ciampi",
-  "password": "aaaa",
+  "password": "rrrr",
   "type": "Arbitro",
+  "team": "FIGC"
+},
+{
+  "username": "Maria Marotta",
+  "password": "rrrr",
+  "type": "Arbitro",
+  "team": "FIGC"
+},
+{
+  "username": "Gabriele Gravina",
+  "password": "figc",
+  "type": "FIGC",
   "team": "FIGC"
 }];
