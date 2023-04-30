@@ -1,5 +1,3 @@
-<!-- Metodi: acquista e vendi giocatore, acquista e vendi allenatore, mostrare vittorie, sconfitte e pareggi, mostra punti, differenza goal fatti e subiti -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,94 +6,151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FIGC</title>
     <link rel="stylesheet" href="./Styles/index.css">
-    <script></script>
+    <script src="./Scripts/Classes/PersonClasses.js"></script>
+    <script src="./Scripts/Classes/TeamClasses.js"></script>
+    <script src="./Scripts/Classes/MatchClasses.js"></script>
+    <script src="./Scripts/Classes/ChampionshipClasses.js"></script>
+    <script src="./Scripts/Data/lists.js"></script>
+    <script src="./Scripts/Data/accounts.js"></script>
+    <script src="./Scripts/mainScript.js"></script>
 </head>
 <body>
-    <div id="loginPage" class="none">
-        <div id="logoFIGC">
-            <img src="Image/logoFIGC.jpg" id="logoFIGC">
-        </div>
+    <div id="loginPage" class="">
         <form id="loginForm">
-            <label for="username">Username:</label><br>
-            <input type="text" name="username" id="username"><br>
-            <label for="password">Password:</label><br>
-            <input type="password" name="password" id="password"><br>
+            <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" id="logoFIGC">
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password">
             <input type="button" value="Sign in" id="signInButton">
         </form>
     </div>
 
-    <div id="presidentPage" class="principalDiv">
+    <div id="presidentPage" class="principalDiv none">
         <header>
-            <img src="Image/logoFIGC.jpg" class="logoUser">
+            <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" id="logoPresidente" class="logoUser">
             <h1>Benvenuto presidente</h1>
+            <button class="uscita"> Esci </button>
         </header>
         <aside class="sideBar">
-            <input type="button" value="Guarda squadra">
-            <input type="button" value="Acquista giocatore">
-            <input type="button" value="Assumi allenatore">
+            <input type="button" id="teamView" value="Guarda squadra">
+            <input type="button" id="market" value="Acquista giocatore">
+            <input type="button" id="manager" value="Assumi allenatore">
         </aside>
-        <aside class="main none">
-            <div class="teamData"> Dati squadra</div>
-            <div class="nextGames">Prossime partite</div>
-        </aside>
-        <aside class="guardaSquadra none">
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
+        <aside class="main guardaSquadra none">
+            <section class="teamstats">
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+            </section>
+            <div class="nextGames">
+                <h2> Prossima Partita </h2>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Football_%28soccer_ball%29.svg/1200px-Football_%28soccer_ball%29.svg.png">
+                <h3> Nessuna Partita </h3>
+            </div>
         </aside>
         <aside class="acquistaGiocatore">
             <div class="searchContainer">
-                <input type="search" placeholder="Seach..." id="searchGiocatore">
+                <input type="search" placeholder="Cerca..." id="searchGiocatore">
+                <div class="searchResult none"></div>
             </div>
             <div class="result">
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
             </div>
         </aside>
-        <aside class="assumiAllenatore none"></aside>
-        <footer></footer>
+        <aside class="main assumiAllenatore none">
+            <div class="card">
+                <h2>Allenatore Corrente</h2>
+                <img src="" alt="Allenatore">
+                <p>Nome</p>
+                <button class="licenzia">Esonera</button>
+            </div>
+            <div class="allenatori">
+                
+            </div>
+        </aside>
     </div>
 
     <div id="managerPage" class="principalDiv none">
         <header>
-            <img src="Image/logoFIGC.jpg" class="logoUser">
+            <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" class="logoUser">
             <h1>Benvenuto mister</h1>
+            <button class="uscita"> Esci </button>
         </header>
         <aside class="sideBar">
-            <input type="button" value="Guarda squadra">
-            <input type="button" value="Decidi formazione">
+            <input type="button" id="club" value="Guarda squadra">
+            <input type="button" id="formation" value="Decidi formazione">
         </aside>
-        <aside class="main">
-            <div class="teamData"> Dati squadra</div>
-            <div class="nextGames">Prossime partite</div>
+        <aside class="main guardaSquadra none">
+            <section class="teamstats">
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+            </section>
+            <div class="partite">
+                <h2> Prossima Partita </h2>
+                <article class="nextGames">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Football_%28soccer_ball%29.svg/1200px-Football_%28soccer_ball%29.svg.png">
+                    <h3> Nessuna Partita </h3>
+                </article>
+            </div>
         </aside>
-        <footer></footer>
+        <aside class="decidiFormazione none">
+            <div>
+                <h3> NON CONVOCATI </h3>
+                <main class="liberi">
+                
+                </main>
+            </div>
+            <div class="convocati">
+                <div>
+                    <h3> TITOLARI </h3>
+                    <article class="titolari">
+
+                    </article>
+                </div>
+                <div>
+                    <h3> PANCHINA </h3>
+                    <section class="panchina">
+    
+                    </section>
+                </div>
+            </div>
+        </aside>
     </div>
 
     <div id="figcPage" class="principalDiv none">
         <header>
-            <img src="Image/logoFIGC.jpg" class="logoUser">
+            <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" class="logoUser">
             <h1>Benvenuto signor</h1>
+            <button class="uscita"> Esci </button>
         </header>
         <aside class="sideBar">
             <input type="button" value="Modifica partite">
         </aside>
         <aside class="main">Partite</aside>
-        <footer></footer>
     </div>
 
     <div id="refereePage" class="principalDiv none">
         <header>
-            <img src="Image/logoFIGC.jpg" class="logoUser">
+            <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" class="logoUser">
             <h1>Benvenuto signor</h1>
+            <button class="uscita"> Esci </button>
         </header>
         <aside class="sideBar">
+            <input type="button" value="Guarda partite">
             <input type="button" value="Modifica partita">
-            <input type="button" value="Guarda partita">
         </aside>
-        <aside class="main">Partite arbitrate o da arbitrare</aside>
-        <footer></footer>
+        <aside class="main">
+            <h2> Partite </h2>
+            <div class="refGames">
+                <div class="gameCard">
+                    <img src="" alt="HomeTeam" class="homeTeam">
+                    <img src="" alt="AwayTeam" class="awayTeam">
+                    <button class="editBtn">Modifica</button>
+                </div>
+            </div>
+        </aside>
     </div>
 </body>
 </html>
+
