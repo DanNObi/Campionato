@@ -172,5 +172,3 @@ class Day {
         this.matches = matches;
     }
 }
-
-}
