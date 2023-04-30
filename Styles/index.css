@@ -1,4 +1,8 @@
 /*Modello pagina*/
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .principalDiv {
     display: grid;
     grid-template-rows: 9vh 68vh 19vh;
@@ -6,14 +10,31 @@
     grid-template-areas: 
                         "header header header"
                         "sideBar main main"
-                        "sideBar footer footer";
+                        "sideBar main main";
+    padding: 0.5rem;
 }
+
+.header, .sideBar, .main, .guardaSquadra, .acquistaGiocatore, aside {
+    border: 1px black solid;
+    margin: 1px;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.400);
+    color: white;
+    padding: 0.25rem;
+    border-radius: 2.5%;
+}
+
+
 header {
-    border: 1px red solid;
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 20%;
     grid-area: header;
+    background-color: #4242426e;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 1.5%;
 }
 .logoUser {
     width: 8vh;
@@ -23,17 +44,15 @@ header {
 header > h1 {
     height: 100%;
     margin-top: 0;
+    text-align: center;
 }
 .sideBar {
-    border: 1px red solid;
     grid-area: sideBar;
 }
 .main {
-    border: 1px red solid;
     grid-area: main;
 }
 footer {
-    border: 1px red solid;
     grid-area: footer;
 }
 .sideBar > [type = "button"] {
@@ -41,12 +60,26 @@ footer {
     display: block;
     margin: 2% auto;
 }
-.teamData {
-    border: 1px red solid;
+.teamstats {
     height: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: center;
 }
+.teamstats > .card {
+    width: 8rem;
+    height: 8rem;
+}
+
 .nextGames {
-    border: 1px red solid;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    text-align: center;
+}
+.nextGames > img {
     height: 40%;
 }
 /*Login page*/
@@ -57,10 +90,17 @@ footer {
 }
 #loginForm {
     border: blue 3px solid;
+    border-radius: 1.5%;
     width: 50vh;
     height: 65vh;
     margin: auto;
     margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.400);
+    color: white;
 }
 #loginForm > label {
     display: block;
@@ -82,24 +122,37 @@ footer {
 }
 /*Manager page*/
 .guardaSquadra {
-    border: 1px red solid;
     grid-area: main;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(2, 1fr);
 }
 .card {
+    background-color: rgb(202, 201, 201);
     border: 1px black solid;
+    color: black;
     border-radius: 5px;
     margin: 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
 }
 .acquistaGiocatore {
-    border: 1px red solid;
     grid-area: main;
+    overflow-y: scroll;
 }
+
 .searchContainer {
     height: 15%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
+
 /* ??????? */
 #searchGiocatore {
     display: block;
@@ -108,11 +161,94 @@ footer {
 .result {
     height: 85%;
     margin-bottom: 0;
-    border: 1px red solid;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(2, 1fr);
 }
+
+.sellBtn {
+    width: 100%;
+    height: 2rem;
+}
+
+.searchResult {
+    position: absolute;
+    z-index: 10;
+
+    width: 100%;
+    background-color: white;
+}
+
+.freeAgent:hover {
+    background-color: grey;
+}
+
+.card {
+    text-align: center;
+}
+
+.card > img {
+    width: 95%;
+}
+
+.guardaSquadra {
+    display: flex;
+    flex-direction: column;
+}
+
+.card > p {
+    text-align: center;
+}
+
+.decidiFormazione {
+    display: flex;
+    flex-direction: column;
+    height: min-content;
+    text-align: center;
+}
+
+.convocati {
+    display: flex;
+    flex-direction: row;
+    overflow-y: scroll;
+}
+
+.liberi, .titolari, .panchina {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 20rem;
+    overflow-y: scroll;
+}
+
+.partite {
+    text-align: center;
+    align-items: center;
+}
+
+.assumiAllenatore {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.assumiAllenatore > .card > img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+}
+.assumiAllenatore > .card {
+    max-width: 20rem;
+    max-height: 20rem;
+}
+
+.allenatori {
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
 /*Classe none*/
 .none {
     display: none;
