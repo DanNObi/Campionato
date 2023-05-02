@@ -15,14 +15,17 @@
     <script src="./Scripts/mainScript.js"></script>
 </head>
 <body>
-    <div id="loginPage" class="">
+    <video class="siteBackground" autoplay muted loop>
+        <source src="./Media/background.mp4" type="video/mp4">
+    </video>
+    <div id="loginPage">
         <form id="loginForm">
             <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" id="logoFIGC">
             <label for="username">Username:</label>
             <input type="text" name="username" id="username">
             <label for="password">Password:</label>
             <input type="password" name="password" id="password">
-            <input type="button" value="Sign in" id="signInButton">
+            <input type="button" value="Accedi" id="signInButton">
         </form>
     </div>
 
@@ -97,7 +100,7 @@
         <aside class="main decidiFormazione none">
             <div>
                 <h3> NON CONVOCATI </h3>
-                <main class="liberi"></main>
+                <article class="liberi"></article>
             </div>
             <div class="convocati">
                 <div>
@@ -106,7 +109,7 @@
                 </div>
                 <div>
                     <h3> PANCHINA </h3>
-                    <section class="panchina"></section>
+                    <article class="panchina"></article>
                 </div>
             </div>
         </aside>
