@@ -31,6 +31,10 @@ let freePlayers, startersContainer, benchContainer;
 
 // Eventi
 function load() {
+    let video = document.querySelector('.siteBackground');
+    video.style.width = `${screen.width + 10}px`;
+    video.style.height = `${screen.height + 10}px`;
+
     // Pagine
     loginPage = document.querySelector('#loginPage');
     presidentPage = document.querySelector('#presidentPage');
@@ -47,17 +51,17 @@ function load() {
 
     submitBtn.addEventListener('click', checkLogin);
 
-    /*
-    usernameBox.value = "Floriano Noto";
+    
+    
+    usernameBox.value = "Antonio Calabro";
     passwordBox.value = "cccc";
-    checkLogin();
-    */
+    checkLogin(); 
 }
 
 // FUNZIONI
 // Login
 function checkLogin() {
-    let accountsTable = accounts.filter(x => x.username === usernameBox.value);
+    let accountsTable = accounts.filter(x => x.username === usernameBox.value && x.password === passwordBox.value);
     if (accountsTable.length === 0) {
         usernameBox.style.border = "1px red";
         return false;
@@ -327,47 +331,45 @@ function loadManager() {
         
         if (currentClub.formation.starters.length === 11) {
             let playerMap = currentClub.players.filter(x => !currentClub.formation.players.includes(x));
-        playerMap.map(x => {
-            let card = document.createElement('div');
-            card.classList.add('card');
-            card.innerHTML = `  <img src=${x._image}>
-                                <p>${x._lastName} #${x.getNumber}</p>
-                                <section>
-                                    <button class="ToTitolare" disabled>Titolare</button>
-                                    <button class="ToPanchina">Panchina</button>
-                                </section>`;
-            dbPlayers.push({player: x, card: card});
-            freePlayers.appendChild(card);
-        });
-        let starterMap = currentClub.formation.starters;
-        starterMap.map(x => {
-            let card = document.createElement('div');
-            card.classList.add('card');
-            card.innerHTML = `  <img src=${x._image}>
-                                <p>${x._lastName} #${x.getNumber}</p>
-                                <section>
-                                    <button class="ToLibero">Libero</button>
-                                    <button class="ToPanchina">Panchina</button>
-                                </section>`;
-            dbPlayers.push({player: x, card: card});
-            startersContainer.appendChild(card);
-        });
-        let benchMap = currentClub.formation.bench;
-        benchMap.map(x => {
-            let card = document.createElement('div');
-            card.classList.add('card');
-            card.innerHTML = `  <img src=${x._image}>
-                                <p>${x._lastName} #${x.getNumber}</p>
-                                <section>
-                                    <button class="ToTitolari" disabled>Titolare</button>
-                                    <button class="ToLibero">Libero</button>
-                                </section>`;
-            dbPlayers.push({player: x, card: card});
-            benchContainer.appendChild(card);
-        });
-        freePlayers.addEventListener('click', freePlayersChange);
-        startersContainer.addEventListener('click', startersChange);
-        benchContainer.addEventListener('click', benchChange);
+            playerMap.map(x => {
+                let card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `  <img src=${x._image}>
+                                    <p>${x._lastName} #${x.getNumber}</p>
+                                    <section>
+                                        <img src='./Media/panchina.png' class="ToPanchina">
+                                    </section>`;
+                dbPlayers.push({player: x, card: card});
+                freePlayers.appendChild(card);
+            });
+            let starterMap = currentClub.formation.starters;
+            starterMap.map(x => {
+                let card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `  <img src=${x._image}>
+                                    <p>${x._lastName} #${x.getNumber}</p>
+                                    <section>
+                                        <img src='./Media/libero.png' class="ToLibero">
+                                        <img src='./Media/panchina.png' class="ToPanchina">
+                                    </section>`;
+                dbPlayers.push({player: x, card: card});
+                startersContainer.appendChild(card);
+            });
+            let benchMap = currentClub.formation.bench;
+            benchMap.map(x => {
+                let card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `  <img src=${x._image}>
+                                    <p>${x._lastName} #${x.getNumber}</p>
+                                    <section>
+                                        <img src='./Media/libero.png' class="ToLibero">
+                                    </section>`;
+                dbPlayers.push({player: x, card: card});
+                benchContainer.appendChild(card);
+            });
+            freePlayers.addEventListener('click', freePlayersChange);
+            startersContainer.addEventListener('click', startersChange);
+            benchContainer.addEventListener('click', benchChange);
         } else {
             generateFormationCards();
         }
@@ -382,8 +384,8 @@ function loadManager() {
             card.innerHTML = `  <img src=${x._image}>
                                 <p>${x._lastName} #${x.getNumber}</p>
                                 <section>
-                                    <button class="ToTitolare">Titolare</button>
-                                    <button class="ToPanchina">Panchina</button>
+                                    <img src='./Media/titolare.png' class="ToTitolare">
+                                    <img src='./Media/panchina.png' class="ToPanchina">
                                 </section>`;
             dbPlayers.push({player: x, card: card});
             freePlayers.appendChild(card);
@@ -395,8 +397,8 @@ function loadManager() {
             card.innerHTML = `  <img src=${x._image}>
                                 <p>${x._lastName} #${x.getNumber}</p>
                                 <section>
-                                    <button class="ToLibero">Libero</button>
-                                    <button class="ToPanchina">Panchina</button>
+                                    <img src='./Media/panchina.png' class="ToPanchina">
+                                    <img src='./Media/libero.png' class="ToLibero">
                                 </section>`;
             dbPlayers.push({player: x, card: card});
             startersContainer.appendChild(card);
@@ -408,8 +410,8 @@ function loadManager() {
             card.innerHTML = `  <img src=${x._image}>
                                 <p>${x._lastName} #${x.getNumber}</p>
                                 <section>
-                                    <button class="ToTitolari">Titolare</button>
-                                    <button class="ToLibero">Libero</button>
+                                    <img src='./Media/titolare.png' class="ToTitolare">
+                                    <img src='./Media/libero.png' class="ToLibero">
                                 </section>`;
             dbPlayers.push({player: x, card: card});
             benchContainer.appendChild(card);
@@ -446,7 +448,7 @@ function loadManager() {
 
     function benchChange(event) {
         let targetClasses = [...event.target.classList];
-        if (targetClasses.includes('ToTitolari')) {
+        if (targetClasses.includes('ToTitolare')) {
             let desiredPlayer = dbPlayers.filter(x => x.card === event.target.parentElement.parentElement)[0].player;
             currentClub.formation.starters.push(desiredPlayer);
             currentClub.formation.bench = currentClub.formation.bench.filter(x => x !== desiredPlayer);
