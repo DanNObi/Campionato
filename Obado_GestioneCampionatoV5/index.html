@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIGC</title>
+    <link rel="stylesheet" href="./Styles/index.css">
+    <script src="./Scripts/Classes/PersonClasses.js"></script>
+    <script src="./Scripts/Classes/TeamClasses.js"></script>
+    <script src="./Scripts/Classes/MatchClasses.js"></script>
+    <script src="./Scripts/Classes/ChampionshipClasses.js"></script>
+    <script src="./Scripts/Data/accounts.js"></script>
+    <script src="./Scripts/Data/lists.js"></script>
+    <script src="./Scripts/mainScript.js"></script>
+</head>
+<body>
+    <video class="siteBackground" autoplay muted loop>
+        <source src="./Media/background.mp4" type="video/mp4">
+    </video>
+    <div id="loginPage" class="loginPage">
+        <form id="loginForm">
+            <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" id="logoFIGC">
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password">
+            <input type="button" value="Accedi" id="signInButton">
+        </form>
+    </div>
+    <div id="presidentPage" class="principalDiv none">
+        <header>
+            <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" id="logoPresidente" class="logoUser">
+            <h1>Presidente</h1>
+            <button class="uscita"> Esci </button>
+        </header>
+        <aside class="sideBar">
+            <input type="button" id="teamView" value="Guarda squadra">
+            <input type="button" id="market" value="Acquista giocatore">
+            <input type="button" id="manager" value="Assumi allenatore">
+        </aside>
+        <aside class="main guardaSquadra none">
+            <section class="teamstats">
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+            </section>
+            <div class="nextGames">
+                <h2> Prossima Partita </h2>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Football_%28soccer_ball%29.svg/1200px-Football_%28soccer_ball%29.svg.png">
+                <h3> Nessuna Partita </h3>
+            </div>
+        </aside>
+        <aside class="acquistaGiocatore">
+            <div class="searchContainer">
+                <input type="search" placeholder="Cerca..." id="searchGiocatore">
+                <div class="searchResult none"></div>
+            </div>
+            <div class="result">
+            </div>
+        </aside>
+        <aside class="main assumiAllenatore none">
+            <div class="card">
+                <h2>Allenatore Corrente</h2>
+                <img src="" alt="Allenatore">
+                <p class="managerName"> Nome </p>
+                <button class="licenzia">Esonera</button>
+            </div>
+            <div class="allenatori">
+                
+            </div>
+        </aside>
+    </div>
+
+    <div id="managerPage" class="principalDiv none">
+        <header>
+            <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" class="logoUser">
+            <h1>Allenatore</h1>
+            <button class="uscita"> Esci </button>
+        </header>
+        <aside class="sideBar">
+            <input type="button" id="club" value="Guarda squadra">
+            <input type="button" id="formation" value="Decidi formazione">
+        </aside>
+        <aside class="main guardaSquadra none">
+            <section class="teamstats">
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+            </section>
+            <div class="partite">
+                <h2> Prossima Partita </h2>
+                <article class="nextGames">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Football_%28soccer_ball%29.svg/1200px-Football_%28soccer_ball%29.svg.png">
+                    <h3> Nessuna Partita </h3>
+                </article>
+            </div>
+        </aside>
+        <aside class="main decidiFormazione none">
+            <div>
+                <h3> NON CONVOCATI </h3>
+                <article class="liberi"></article>
+            </div>
+            <div class="convocati">
+                <div>
+                    <h3> TITOLARI </h3>
+                    <article class="titolari"></article>
+                </div>
+                <div>
+                    <h3> PANCHINA </h3>
+                    <article class="panchina"></article>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div id="figcPage" class="principalDiv none">
+        <header>
+            <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" class="logoUser">
+            <h1>Benvenuto signor</h1>
+            <button class="uscita"> Esci </button>
+        </header>
+        <aside class="sideBar"></aside>
+        <aside class="main"></aside>
+        <aside class="modificaPartita none">
+            <form>
+                <label for="newData">Insrisci una nuova data:</label><br>
+                <input type="date" id="newData" name="newData">
+                <p>Inserisci la squadra di casa:</p><br>
+                <select id="squadraCasa">
+                    <option>Inserisci...</option>
+                </select>
+                <p>Inserisci la squadra di trasferta:</p><br>
+                <select id="squadraTrasferta">
+                    <option>Inserisci...</option>
+                </select>
+                <p>Inserisci l'arbitro:</p><br>
+                <select id="arbitro">
+                    <option>Inserisci...</option>
+                </select><br>
+                <input type="button" id="modificaPartitaBtn" value="Modifica">
+            </form>
+        </aside>
+    </div>
+    <div id="refereePage" class="principalDiv refPage none">
+        <header>
+            <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" class="logoUser">
+            <h1>Arbitro</h1>
+            <button class="uscita"> Esci </button>
+        </header>
+        <aside class="sideBar">
+            <input type="button" value="Guarda partite" class="refGamesBtn">
+        </aside>
+        <aside class="main refGamesScreen">
+            <h2> Partite </h2>
+            <div class="refMatchList">
+                
+            </div>
+        </aside>
+        <aside class="main matchEditor none">
+            <main class="matchDisplay">
+                <section class="matchResult">
+                    <img class="homeTeamCrest" src="" alt="">
+                    <h3 class="homeTeamGoals"></h3>
+                    <h3> - </h3>
+                    <h3 class="awayTeamGoals"></h3>
+                    <img class="awayTeamCrest" src="" alt="">
+                </section>
+                <article class="matchEventList">
+                    
+                </article>
+            </main>
+            <section class="matchEventAdd">
+                <h4>Evento</h4>
+                <select name="eventTypes" class="eventTypes">
+                    <option value="Goal"> Gol </option>
+                    <option value="YellowCard">Cart.ino Giallo</option>
+                    <option value="RedCard">Cart.ino Rosso</option>
+                </select>
+                <h4>Giocatore</h4>
+                <select name="players" class="playerSelect">
+
+                </select>
+                <h4>Minuto</h4>
+                <input type="number" name="minute" class="minuteSelect">
+                <button class="addEventBtn"> Aggiungi </button>
+            </section>
+        </aside>
+    </div>
+</body>
+</html>

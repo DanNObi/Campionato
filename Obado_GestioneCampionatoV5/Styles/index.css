@@ -1,0 +1,398 @@
+/*Modello pagina*/
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.principalDiv {
+    display: grid;
+    grid-template-rows: 9vh 68vh 19vh;
+    grid-template-columns: 20% 80%;
+    grid-template-areas: 
+                        "header header header"
+                        "sideBar main main"
+                        "sideBar main main";
+    padding: 0.5rem;
+}
+
+.header, .sideBar, .main, .guardaSquadra, .acquistaGiocatore, aside {
+    border: 1px black solid;
+    margin: 1px;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.400);
+    color: white;
+    padding: 0.25rem;
+    border-radius: 2.5%;
+}
+
+.header {
+    grid-area: "header"; 
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20%;
+    grid-area: header;
+    background-color: #4242426e;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 1.5%;
+}
+.logoUser {
+    width: 8vh;
+    height: 8vh;
+    margin-left: 10%;
+}
+header > h1 {
+    height: 100%;
+    margin-top: 0;
+    text-align: center;
+}
+.sideBar {
+    grid-area: sideBar;
+}
+.main {
+    grid-area: main;
+}
+footer {
+    grid-area: footer;
+}
+.sideBar > [type = "button"] {
+    width: 95%;
+    display: block;
+    margin: 2% auto;
+}
+.teamstats {
+    height: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: center;
+}
+.teamstats > .card {
+    width: 8rem;
+    height: 8rem;
+}
+
+.nextGames {
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    align-items: center;
+    text-align: center;
+}
+.nextGames > img {
+    width: 10rem;
+    height: 10rem;
+}
+
+/*Login page*/
+#logoFIGC {
+    height: 25vh;
+    width: 25vh;
+    margin: auto;
+}
+
+#loginForm {
+    border: blue 3px solid;
+    border-radius: 1.5%;
+    width: 20rem;
+    height: 30rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.500);
+    color: black;
+}
+
+#loginForm > label {
+    display: block;
+    width: 60%;
+    text-align: center;
+    margin: auto;
+}
+
+#loginForm > input {
+    display: block;
+    margin: auto;
+    margin-bottom: 5%;
+}
+
+/*Manager page*/
+.guardaSquadra {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+.card {
+    background-color: rgb(202, 201, 201);
+    border: 1px black solid;
+    color: black;
+    border-radius: 5px;
+    margin: 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.acquistaGiocatore {
+    grid-area: main;
+    overflow-y: scroll;
+}
+
+.searchContainer {
+    height: 15%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ??????? */
+#searchGiocatore {
+    display: block;
+    margin: 5% 5% 0 0 ;
+}
+.result {
+    height: 85%;
+    margin-bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.sellBtn {
+    width: 100%;
+}
+
+.searchResult {
+    position: absolute;
+    z-index: 10;
+
+    width: 100%;
+    background-color: white;
+    color: black;
+}
+
+.freeAgent:hover {
+    background-color: grey;
+}
+
+.card {
+    text-align: center;
+}
+
+.card > img {
+    width: 95%;
+}
+
+.guardaSquadra {
+    display: flex;
+    flex-direction: column;
+}
+
+.card > p {
+    text-align: center;
+}
+
+.decidiFormazione {
+    display: flex;
+    flex-direction: column;
+    height: min-content;
+    text-align: center;
+}
+
+.convocati {
+    display: flex;
+    flex-direction: row;
+    overflow-y: scroll;
+}
+
+.liberi, .titolari, .panchina {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 15.25rem;
+    overflow-y: scroll;
+}
+
+.partite {
+    text-align: center;
+    align-items: center;
+}
+
+.assumiAllenatore {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.assumiAllenatore > .card > img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+}
+.assumiAllenatore > .card {
+    max-width: 20rem;
+    max-height: 20rem;
+}
+
+.allenatori {
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.card > section > img {
+    max-width: 25%;
+    background-color: white;
+    padding: 0.25rem;
+    border: black solid 0.1rem;
+    cursor: pointer;
+}
+
+.siteBackground {
+    position: absolute;
+    z-index: -10;
+    margin: 0;
+}
+
+body {
+    overflow: hidden;
+    margin: 0;
+}
+
+.refMatchList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow: scroll;
+    height: 80%;
+    padding: 0.5rem;
+}
+
+.gameCard, .gameAction {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border: black 0.1rem solid;
+    margin: 0.1rem;
+    text-align: center;
+    padding: 0.25rem;
+}
+
+.deleteEvent {
+    max-width: 2rem;
+}
+
+.gameCard >img, .homeTeamCrest, .awayTeamCrest {
+    max-height: 8rem;
+}
+
+.editBtn, .deleteEvent {
+    background-color: white;
+    width: 3rem;
+    padding: 0.25rem;
+    border: black solid 0.1rem;
+    cursor: pointer;
+}
+
+.homeTeam, .awayTeam {
+    width: 20%;
+}
+
+
+.matchEditor {
+    display: grid;
+    grid-template-areas: "match match eventAdd"
+                         "match match eventAdd"
+                         "match match eventAdd";
+}
+
+.matchDisplay {
+    grid-area: match;
+    
+}
+
+.matchEventAdd {
+    grid-area: eventAdd;
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem;
+    align-items: center;
+}
+
+.matchEventAdd > input, select, button {
+    width: 9rem;
+    margin: 0.4rem;
+}
+
+.matchEventList {
+    overflow-y: scroll;
+    max-height: 25rem;
+}
+
+.matchResult {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.matchResult > h3 {
+    font-size: 3rem;
+}
+
+.loginPage {
+    height: 100vh;
+    display: flex;
+}
+
+
+.wrong {
+    border: 1px red solid;
+}
+/*Struttura di una partita*/
+.partita {
+    border: red 1px solid;
+    height: 15vh;
+    display: flex;
+    gap: 5%;
+    flex-direction: row;
+}
+.squadra {
+    height: 10vh;
+    width: 10vh;
+    margin-top: 2.5vh;
+}
+.squadra:first-child {
+    margin-left: 10%;
+}
+.data {
+    height: 5vh;
+    margin-top: 5.75vh;
+    margin-left: 10%;
+}
+.versus {
+    height: 5vh;
+    margin-top: 5vh;
+}
+.modifica {
+    height: 4vh;
+    width: 4vh;
+    margin-top: 5.5vh;
+}
+/*Classe none*/
+.none {
+    display: none; 
+}
