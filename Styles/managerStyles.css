@@ -1,0 +1,19 @@
+.decidiFormazione {
+    display: flex;
+    flex-direction: column;
+    height: min-content;
+    text-align: center;
+}
+
+.convocati {
+    display: flex;
+    flex-direction: row;
+    overflow-y: scroll;
+}
+
+.liberi, .titolari, .panchina {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 15.25rem;
+    overflow-y: scroll;
+}

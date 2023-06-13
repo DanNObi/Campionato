@@ -1,0 +1,81 @@
+.refMatchList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow: scroll;
+    height: 80%;
+    padding: 0.5rem;
+}
+
+.gameCard, .gameAction {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border: black 0.1rem solid;
+    margin: 0.1rem;
+    text-align: center;
+    padding: 0.25rem;
+}
+
+.deleteEvent {
+    max-width: 2rem;
+}
+
+.gameCard >img, .homeTeamCrest, .awayTeamCrest {
+    max-height: 8rem;
+}
+
+.editBtn, .deleteEvent {
+    background-color: white;
+    width: 3rem;
+    padding: 0.25rem;
+    border: black solid 0.1rem;
+    cursor: pointer;
+}
+
+.homeTeam, .awayTeam {
+    width: 20%;
+}
+
+
+.matchEditor {
+    display: grid;
+    grid-template-areas: "match match eventAdd"
+                         "match match eventAdd"
+                         "match match eventAdd";
+}
+
+.matchDisplay {
+    grid-area: match;
+    
+}
+
+.matchEventAdd {
+    grid-area: eventAdd;
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem;
+    align-items: center;
+}
+
+.matchEventAdd > input, select, button {
+    width: 9rem;
+    margin: 0.4rem;
+}
+
+.matchEventList {
+    overflow-y: scroll;
+    max-height: 25rem;
+}
+
+.matchResult {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.matchResult > h3 {
+    font-size: 3rem;
+}

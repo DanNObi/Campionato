@@ -1,24 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title> Gestione Campionato </title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIGC</title>
-    <link rel="stylesheet" href="./Styles/index.css">
+    <!-- STILI CSS -->
+    <link rel="stylesheet" href="./Styles/commonStyles.css">
+    <link rel="stylesheet" href="./Styles/loginStyles.css">
+    <link rel="stylesheet" href="./Styles/presidentStyles.css">
+    <link rel="stylesheet" href="./Styles/managerStyles.css">
+    <link rel="stylesheet" href="./Styles/figcStyles.css">
+    <link rel="stylesheet" href="./Styles/refereeStyles.css">
+    <link rel="stylesheet" href="./Styles/joblessStyles.css">
+    <!-- CLASSI -->
     <script src="./Scripts/Classes/PersonClasses.js"></script>
     <script src="./Scripts/Classes/TeamClasses.js"></script>
     <script src="./Scripts/Classes/MatchClasses.js"></script>
     <script src="./Scripts/Classes/ChampionshipClasses.js"></script>
-    <script src="./Scripts/Data/lists.js"></script>
+    <!-- DATI -->
     <script src="./Scripts/Data/accounts.js"></script>
-    <script src="./Scripts/mainScript.js"></script>
+    <script src="./Scripts/Data/lists.js"></script>
+    <!-- LOGIN -->
+    <script src="./Scripts/loginScript.js"></script>
+    <!-- PRESIDENTE -->
+    <script src="./Scripts/UserTypes/President/presidentScript.js"></script>
+    <script src="./Scripts/UserTypes/President/pManagerScript.js"></script>
+    <script src="./Scripts/UserTypes/President/pTransferScript.js"></script>
+    <!--ALTRI UTENTI-->
+    <script src="./Scripts/UserTypes/managerScript.js"></script>
+    <script src="./Scripts/UserTypes/refereeScript.js"></script>
+    <script src="./Scripts/UserTypes/figcScript.js"></script>
+    <script src="./Scripts/UserTypes/joblessScript.js"></script>
 </head>
 <body>
     <video class="siteBackground" autoplay muted loop>
         <source src="./Media/background.mp4" type="video/mp4">
     </video>
-    <div id="loginPage">
+    <div id="loginPage" class="loginPage">
         <form id="loginForm">
             <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" id="logoFIGC">
             <label for="username">Username:</label>
@@ -28,12 +47,11 @@
             <input type="button" value="Accedi" id="signInButton">
         </form>
     </div>
-
     <div id="presidentPage" class="principalDiv none">
         <header>
             <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" id="logoPresidente" class="logoUser">
-            <h1>Benvenuto presidente</h1>
-            <button class="uscita"> Esci </button>
+            <h1>Presidente</h1>
+            <button class="uscita"> Chiudi Sessione </button>
         </header>
         <aside class="sideBar">
             <input type="button" id="teamView" value="Guarda squadra">
@@ -72,12 +90,11 @@
             </div>
         </aside>
     </div>
-
     <div id="managerPage" class="principalDiv none">
         <header>
             <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" class="logoUser">
-            <h1>Benvenuto mister</h1>
-            <button class="uscita"> Esci </button>
+            <h1>Allenatore</h1>
+            <button class="uscita"> Chiudi Sessione </button>
         </header>
         <aside class="sideBar">
             <input type="button" id="club" value="Guarda squadra">
@@ -114,38 +131,116 @@
             </div>
         </aside>
     </div>
-
     <div id="figcPage" class="principalDiv none">
         <header>
             <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" class="logoUser">
-            <h1>Benvenuto signor</h1>
-            <button class="uscita"> Esci </button>
+            <h1>Benvenuto Presidente</h1>
+            <button class="uscita"> Chiudi Sessione </button>
         </header>
         <aside class="sideBar">
-            <input type="button" value="Modifica partite">
+            <input type="button" id="calendar" value="Calendario">
+            <input type="button" id="addPerson" value="Registrazione Persone">
+            <input type="button" id="addTeam" value="Registrazione Squadra">
         </aside>
-        <aside class="main">Partite</aside>
-    </div>
+        <aside class="main"></aside>
+        <aside class="modificaPartita none">
+            <form>
+                <label for="newData">Inserisci una nuova data:</label><br>
+                <input type="date" id="newData" name="newData">
+                <p>Inserisci la squadra di casa:</p><br>
+                <select id="squadraCasa">
+                    <option>Inserisci...</option>
+                </select>
+                <p>Inserisci la squadra di trasferta:</p><br>
+                <select id="squadraTrasferta">
+                    <option>Inserisci...</option>
+                </select>
+                <p>Inserisci l'arbitro:</p><br>
+                <select id="arbitro">
+                    <option>Inserisci...</option>
+                </select><br>
+                <input type="button" id="modificaPartitaBtn" value="Modifica">
+                <button class="annulla"> Annulla </button>
+            </form>
+        </aside>
+        <aside class="aggiungiPersona none">
+            <label for="type"></label>
+            <select id="type" class="typeSelect">
+                <option value="Giocatore">Giocatore</option>
+                <option value="Allenatore">Allenatore</option>
+                <option value="Arbitro">Arbitro</option>
+            </select>
+            <label for="firstName"> Nome </label>
+            <input id="firstName" class="firstName" type="text">
+            <label for="lastName"> Cognome </label>
+            <input id="lastName" type="text">
+            <label for="dateOfBirth"> Data di Nascita </label>
+            <input type="datetime" id="dateOfBirth">
+            <label for="profileImage"> Immagine (URL) </label>
+            <input id="profileImage" type="text">
+        </aside>
+        <aside class="aggiungiSquadra none">
 
-    <div id="refereePage" class="principalDiv none">
+        </aside>
+    </div>
+    <div id="refereePage" class="principalDiv refPage none">
         <header>
             <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" class="logoUser">
-            <h1>Benvenuto signor</h1>
-            <button class="uscita"> Esci </button>
+            <h1>Arbitro</h1>
+            <button class="uscita"> Chiudi Sessione </button>
         </header>
         <aside class="sideBar">
-            <input type="button" value="Guarda partite">
-            <input type="button" value="Modifica partita">
+            <input type="button" value="Guarda partite" class="refGamesBtn">
         </aside>
-        <aside class="main">
+        <aside class="main refGamesScreen">
             <h2> Partite </h2>
-            <div class="refGames">
-                <div class="gameCard">
-                    <img src="" alt="HomeTeam" class="homeTeam">
-                    <img src="" alt="AwayTeam" class="awayTeam">
-                    <button class="editBtn">Modifica</button>
-                </div>
+            <div class="refMatchList">
+                
             </div>
+        </aside>
+        <aside class="main matchEditor none">
+            <main class="matchDisplay">
+                <section class="matchResult">
+                    <img class="homeTeamCrest" src="" alt="">
+                    <h3 class="homeTeamGoals"></h3>
+                    <h3> - </h3>
+                    <h3 class="awayTeamGoals"></h3>
+                    <img class="awayTeamCrest" src="" alt="">
+                </section>
+                <article class="matchEventList">
+                    
+                </article>
+            </main>
+            <section class="matchEventAdd">
+                <h4>Evento</h4>
+                <select name="eventTypes" class="eventTypes">
+                    <option value="Goal"> Gol </option>
+                    <option value="YellowCard">Cart.ino Giallo</option>
+                    <option value="RedCard">Cart.ino Rosso</option>
+                </select>
+                <h4>Giocatore</h4>
+                <select name="players" class="playerSelect">
+
+                </select>
+                <h4>Minuto</h4>
+                <input type="number" name="minute" class="minuteSelect">
+                <button class="addEventBtn"> Aggiungi </button>
+            </section>
+        </aside>
+    </div>
+    <div id="joblessPage" class="principalDiv none">
+        <header>
+            <img src="https://upload.wikimedia.org/wikipedia/it/8/8f/Logo_FIGC_Nazionale_italiana_%282023%29.svg" class="logoUser">
+            <h1>Disoccupato</h1>
+            <button class="uscita"> Chiudi Sessione </button>
+        </header>
+        <aside class="sideBar">
+           
+        </aside>
+        <aside class="main joblessMain">
+            <h4>
+                Nulla da fare...
+            </h4>
         </aside>
     </div>
 </body>

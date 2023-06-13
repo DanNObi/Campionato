@@ -20,6 +20,10 @@ class Person {
   get lastName() {
     return this._lastName;
   }
+
+  get fullName() {
+    return this._firstName + " " + this._lastName;
+  }
   
   get dateOfBirth() {
     return this._dateOfBirth;
@@ -132,14 +136,14 @@ class Participant extends Person {
 
 class Referee extends Person {
     /**@type {Array<Match>}*/ #matches;
-    
+
     /**
-    * @param {string} firstName 
-    * @param {string} lastName 
-    * @param {Date} dateOfBirth 
-    * @param {string} image 
-    * @param {Array<Match>} matches 
-    */
+     * @param {string} firstName 
+     * @param {string} lastName 
+     * @param {Date} dateOfBirth 
+     * @param {string} image 
+     * @param {Array<Match>} matches 
+     */
     constructor(firstName, lastName, dateOfBirth, image, matches) {
         super(firstName, lastName, dateOfBirth, image);
         this.#matches = matches;
@@ -153,6 +157,10 @@ class Referee extends Person {
         this.#matches = matches;
     }
 
+    /**
+     * 
+     * @param {Match} match 
+     */
     addMatch(match) {
         this.#matches.push(match);
     }

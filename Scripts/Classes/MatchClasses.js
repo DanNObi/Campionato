@@ -6,7 +6,7 @@ class Match {
     /** @type {Formation} */ #awayFormation;
     /** @type {Array<Participant>} */ #onFieldHomePlayers;
     /** @type {Array<Participant>} */ #onFieldAwayPlayers;
-    /** @type {Person} */ #referee;
+    /** @type {Referee} */ #referee;
     /** @type {Date} */ #date;
 
     /**
@@ -14,7 +14,7 @@ class Match {
      * @param {Date} date 
      * @param {Team} homeTeam
      * @param {Team} awayTeam
-     * @param {Person} referee
+     * @param {Referee} referee
      */
     constructor(date, homeTeam, awayTeam, referee) {
         this.#date = date;
@@ -22,6 +22,9 @@ class Match {
         this.#awayFormation = new Formation(awayTeam.formation);
         this.#referee = referee;
         this.#goals = [], this.#subsIn = [], this.#subsOut = [], this.#yellowCards = [], this.#expulsions = [];
+        this.#onFieldHomePlayers = this.#homeFormation.starters;
+        this.#onFieldAwayPlayers = this.awayFormation.starters;
+        this.#referee.addMatch(this);
     }
 
     // FUNZIONI CRUD
@@ -46,30 +49,34 @@ class Match {
         this.#expulsions.push(new MatchEvent(player, minute));
     }
 
+    /**
+     * @param {MatchEvent} event 
+     */
+    removeEvent(event) {
+        this.#goals = this.#goals.filter(x => x !== event);
+        this.#subsIn = this.#subsIn.filter(x => x !== event);
+        this.#subsOut = this.#subsOut.filter(x => x !== event);
+        this.#yellowCards = this.#yellowCards.filter(x => x !== event);
+        this.#expulsions = this.#expulsions.filter(x => x !== event);
+    }
+
     // FUNZIONI PER L'OTTENIMENTO DI INFORMAZIONI
     //  GIOCATORI
-    get getAllOnFieldPlayers() {
+    get allOnFieldPlayers() {
         return this.#onFieldHomePlayers.concat(this.#onFieldAwayPlayers);
     }
 
     // SQUADRE
-    /**
-     * @returns {Date}
-     */
-    get date() {
-        return this.#date;
-    }
-
-    set date(date) {
-        this.#date = date;
-    }
-
     get goals() {
         return this.#goals;
     }
 
     get homeFormation() {
         return this.#homeFormation;
+    }
+    
+    get homeTeamName() {
+        return this.#homeFormation.team.name;
     }
 
     set homeTeam(team) {
@@ -82,6 +89,10 @@ class Match {
 
     get awayFormation() {
         return this.#awayFormation;
+    }
+
+    get awayTeamName() {
+        return this.#awayFormation.team.name;
     }
 
     isHomeTeamVictory() {
@@ -124,7 +135,7 @@ class Match {
     get homeTeamGoals() {
         let num = 0;
         this.#goals.map(x => {
-            if (this.#homeFormation.players().includes(x.player)) num++;
+            if (this.#homeFormation.players.includes(x.player)) num++;
         });
         return num;
     }
@@ -135,7 +146,7 @@ class Match {
     get awayTeamGoals() {
         let num = 0;
         this.#goals.map(x => {
-            if (this.#awayFormation.players().includes(x.player)) num++;
+            if (this.#awayFormation.players.includes(x.player)) num++;
         });
         return num;
     }
@@ -168,6 +179,30 @@ class Match {
             if (this.#awayFormation.players.includes(x.player)) points-=3;
         });
         return points;
+    }
+
+    // ALTRO
+    get matchEvents() {
+        return this.#goals.concat(this.#yellowCards).concat(this.#expulsions).sort((x, y) => x.minute - x.minute);
+    }
+
+    get yellowCards() {
+        return this.#yellowCards;
+    }
+
+    /**
+     * @returns {Date}
+     */
+    get date() {
+        return this.#date;
+    }
+
+    set date(date) {
+        this.#date = date;
+    }
+
+    get referee() {
+        return this.#referee;
     }
 }
 

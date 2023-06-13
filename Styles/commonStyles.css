@@ -1,0 +1,173 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* STILI DELLA PAGINA  */
+.siteBackground {
+    position: absolute;
+    z-index: -10;
+    margin: 0;
+}
+
+body {
+    overflow: hidden;
+    margin: 0;
+}
+
+.header, .sideBar, .main, .guardaSquadra, .acquistaGiocatore, aside {
+    border: 1px black solid;
+    margin: 1px;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.400);
+    color: white;
+    padding: 0.25rem;
+    border-radius: 2.5%;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20%;
+    grid-area: header;
+    background-color: #4242426e;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 1.5%;
+}
+
+.header {
+    grid-area: "header"; 
+}
+
+header > h1 {
+    height: 100%;
+    margin-top: 0;
+    text-align: center;
+}
+
+.logoUser {
+    width: 8vh;
+    height: 8vh;
+    margin-left: 10%;
+}
+
+.sideBar {
+    grid-area: sideBar;
+}
+
+.sideBar > [type = "button"] {
+    width: 95%;
+    display: block;
+    margin: 2% auto;
+}
+
+.principalDiv {
+    display: grid;
+    grid-template-rows: 9vh 68vh 19vh;
+    grid-template-columns: 20% 80%;
+    grid-template-areas: 
+                        "header header header"
+                        "sideBar main main"
+                        "sideBar main main";
+    padding: 0.5rem;
+}
+
+.main {
+    grid-area: main;
+}
+footer {
+    grid-area: footer;
+}
+
+/* PAGINA SQUADRA PER PRESIDENTE ED ALLENATORE */
+.guardaSquadra {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.card {
+    background-color: rgb(202, 201, 201);
+    border: 1px black solid;
+    color: black;
+    border-radius: 5px;
+    margin: 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.result {
+    height: 85%;
+    margin-bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.card {
+    text-align: center;
+}
+
+.card > img {
+    width: 95%;
+}
+
+.guardaSquadra {
+    display: flex;
+    flex-direction: column;
+}
+
+.card > p {
+    text-align: center;
+}
+
+.partite {
+    text-align: center;
+    align-items: center;
+}
+
+.card > section > img {
+    max-width: 25%;
+    background-color: white;
+    padding: 0.25rem;
+    border: black solid 0.1rem;
+    cursor: pointer;
+}
+
+.teamstats {
+    height: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: center;
+}
+.teamstats > .card {
+    width: 8rem;
+    height: 8rem;
+}
+
+.nextGames {
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    align-items: center;
+    text-align: center;
+}
+
+.nextGames > img {
+    width: 10rem;
+    height: 10rem;
+}
+
+/* CLASSE NONE */
+.none {
+    display: none; 
+}

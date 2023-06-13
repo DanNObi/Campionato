@@ -256,18 +256,23 @@ let catanzaro = new Team("U.S. Catanzaro",
 
 // Arbitri
 const refImage = "https://cdn-icons-png.flaticon.com/512/26/26288.png";
-/**@type {Array<Referee>}*/const referees=[new Referee("Maurizio", "Ciampi", new Date("24/11/1972"), refImage, []),
-                new Referee("Daniele", "Perenzoni", new Date("16/08/1988"), refImage, []),
-                new Referee("Maria", "Marotta", new Date("23/02/1984"), refImage, [])];
+/**@type {Array<Referee>}*/const referees=[{
+                referee: new Referee("Maurizio", "Ciampi", new Date("24/11/1972"), refImage, []), account: accounts[4]
+                }, 
+                {
+                    referee: new Referee("Maria", "Marotta", new Date("23/02/1984"), refImage, []), account: accounts[5]
+                },{
+                    referee: new Referee("Daniele", "Perenzoni", new Date("16/08/1988"), refImage, []), account: accounts[6]
+                }];
 
 
 // Giornate del Girone A
-let GroupDay1Amatches = [ new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 10), teamList[0], teamList[1], referees[0]),
-                    new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 15), teamList[1], teamList[2], referees[1]),
-                    new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 17), teamList[2], teamList[0], referees[2])], day1A = new Day(GroupDay1Amatches);
-let GroupDay2Amatches= [new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 19), teamList[0], teamList[2], referees[0]),
-                        new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 21), teamList[1], teamList[0], referees[1]),
-                        new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 23), teamList[2], teamList[1], referees[2])], day2A = new Day(GroupDay2Amatches);
+let GroupDay1Amatches = [ new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 10), teamList[0], teamList[1], referees[0].referee),
+                    new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 15), teamList[1], teamList[2], referees[1].referee),
+                    new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 17), teamList[2], teamList[0], referees[2].referee)], day1A = new Day(GroupDay1Amatches);
+let GroupDay2Amatches= [new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 19), teamList[0], teamList[2], referees[0].referee),
+                        new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 21), teamList[1], teamList[0], referees[1].referee),
+                        new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 23), teamList[2], teamList[1], referees[2].referee)], day2A = new Day(GroupDay2Amatches);
 let groupAdays = [day1A, day2A];
 let groupA = new Group([teamList[0], teamList[1], teamList[2]], groupAdays);
 teamList[0].matches = GroupDay1Amatches.filter(x => x.isHomeTeam(teamList[0]) || x.isAwayTeam(teamList[0])).concat(GroupDay2Amatches.filter(x => x.isHomeTeam(teamList[0]) || x.isAwayTeam(teamList[0])));
@@ -275,12 +280,12 @@ teamList[1].matches = GroupDay1Amatches.filter(x => x.isHomeTeam(teamList[1]) ||
 teamList[2].matches = GroupDay1Amatches.filter(x => x.isHomeTeam(teamList[2]) || x.isAwayTeam(teamList[2])).concat(GroupDay2Amatches.filter(x => x.isHomeTeam(teamList[2]) || x.isAwayTeam(teamList[2])));
 
 // Giornate del Girone B
-let GroupDay1Bmatches= [new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 10), teamList[3], teamList[4], referees[0]),
-                        new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 15), teamList[4], teamList[5], referees[1]),
-                        new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 17), teamList[5], teamList[3], referees[2])], day1B = new Day(GroupDay1Bmatches);
-let GroupDay2Bmatches= [new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 19), teamList[3], teamList[4], referees[0]),
-                        new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 21), teamList[5], teamList[3], referees[1]),
-                        new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 23), teamList[4], teamList[5], referees[2])], day2B = new Day(GroupDay2Bmatches);
+let GroupDay1Bmatches= [new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 10), teamList[3], teamList[4], referees[0].referee),
+                        new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 15), teamList[4], teamList[5], referees[1].referee),
+                        new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 17), teamList[5], teamList[3], referees[2].referee)], day1B = new Day(GroupDay1Bmatches);
+let GroupDay2Bmatches= [new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 19), teamList[3], teamList[4], referees[0].referee),
+                        new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 21), teamList[5], teamList[3], referees[1].referee),
+                        new Match(new Date(new Date().getFullYear(), new Date().getMonth(), 23), teamList[4], teamList[5], referees[2].referee)], day2B = new Day(GroupDay2Bmatches);
 let groupBdays = [day1B, day2B];
 let groupB = new Group([teamList[3], teamList[4], teamList[5]], groupBdays);
                 
